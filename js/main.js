@@ -29,6 +29,11 @@ let SAFE_PLAYERS = 0
 
 const startBtn = document.querySelector('.start-btn')
 
+const bgMusic = new Audio('./music/bg.mp3')
+bgMusic.loop = true
+const winMusic = new Audio('./music/win.mp3')
+const loseMusic = new Audio('./music/lose.mp3')
+
 loader.load( './model/scene.gltf', function ( gltf ){
     scene.add( gltf.scene )
     doll = gltf.scene
@@ -96,7 +101,7 @@ class Player {
             this.playerInfo.isDead = true
             this.stop()
             DEAD_PLAYERS++
-            
+            loseMusic.play()
             if(DEAD_PLAYERS == players.length){
                 text.innerText = "No one Survived!"
                 gameStat = "ended"
@@ -110,7 +115,7 @@ class Player {
             this.playerInfo.isDead = true
             this.stop()
             SAFE_PLAYERS++
-            
+            winMusic.play()
             if(SAFE_PLAYERS == players.length){
                 text.innerText = "Everyone Survived!!!"
                 gameStat = "ended"
@@ -159,6 +164,7 @@ async function init(){
     lookBackward()
     await delay(500)
     text.innerText = "Gooo!!!"
+    bgMusic.play()
     start()
 }
 
